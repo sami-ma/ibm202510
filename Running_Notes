@@ -1,3 +1,9 @@
 Welcome to PostgreSQL Training
 Day 1:
 -----
+create table t1 (id int, name varchar(20))
+
+select * from pg_database;
+SELECT * FROM pg_catalog.pg_class where relname = 't1';
+insert into t1 values (10, 'aaa')
+select * from t1;
