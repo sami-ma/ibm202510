@@ -131,3 +131,35 @@ select * from test
 # set search_path permanently for the user
 ALTER USER postgres IN DATABASE ibm SET SEARCH_PATH = october, public;
 
+
+# Date and Time Formats
+# 
+# 'YYYY-MM-DD  HH:MI:SS.xxx' --> Standard Timestamp
+
+
+
+
+# 'YYYY-MM-DD  HH:MI:SS.xxx +5:30'  --> Standard Timestamp with Time Zone
+# 'YYYY-MM-DD'  -->  Standard Date Format
+# 'HH:MI:SS.xxxx'     -->  standard Time Format
+#
+
+# RULES in Postgres: 
+# Example - Make sure table ptest with one varchar column exist and also table test with 2 columns (int & varchar) exists
+CREATE RULE stupid_rule AS
+ON INSERT TO ptest
+DO INSTEAD
+insert into test (name) values (new.cname);
+
+insert into ptest values ('sami')
+
+# RULES in Postgres: 
+# Example - Make sure table ptest with one varchar column exist and also table test with 2 columns (int & varchar) exists
+CREATE RULE stupid_rule AS
+ON INSERT TO ptest
+DO INSTEAD
+insert into test (name) values (new.cname);
+
+insert into ptest values ('sami')
+
+
