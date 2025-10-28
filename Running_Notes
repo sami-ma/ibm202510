@@ -99,5 +99,16 @@ employees=# \d emp
 
 employees=#
 
+# Use variables in PSQL
+#Example:
+employees=# \set t emp
+employees=# select * from :t limit 1;
+ empno | ename |  job  | mgr  |  hiredate  |  sal   | comm | deptno
+-------+-------+-------+------+------------+--------+------+--------
+  7369 | SMITH | CLERK | 7902 | 1980-12-17 | 800.00 |      |     20
+(1 row)
+
+
+employees=# \unset t
 
 
