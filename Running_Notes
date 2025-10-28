@@ -115,4 +115,19 @@ employees=# \unset t
 
 create database ibm;
 
+# Schemas and Search_PAth
+
+select * from ptest;
+
+select * from test;
+
+select * from october.test;
+
+show search_path
+set search_path = public, october;
+
+select * from test
+
+# set search_path permanently for the user
+ALTER USER postgres IN DATABASE ibm SET SEARCH_PATH = october, public;
 
