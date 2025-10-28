@@ -111,4 +111,8 @@ employees=# select * from :t limit 1;
 
 employees=# \unset t
 
+# Create a New database
+
+create database ibm;
+
 
