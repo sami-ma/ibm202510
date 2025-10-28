@@ -70,5 +70,34 @@ Password for user postgres:
 
 C:\Program Files\PostgreSQL\16\bin>
 
+# Info Commands  in PSQL
+
+employees=# \d
+          List of relations
+ Schema |   Name   | Type  |  Owner
+--------+----------+-------+----------
+ public | bonus    | table | postgres
+ public | dept     | table | postgres
+ public | emp      | table | postgres
+ public | salgrade | table | postgres
+(4 rows)
+
+
+employees=# \d emp
+                                Table "public.emp"
+  Column  |         Type          | Collation | Nullable |         Default
+----------+-----------------------+-----------+----------+-------------------------
+ empno    | integer               |           | not null |
+ ename    | character varying(10) |           |          | NULL::character varying
+ job      | character varying(9)  |           |          | NULL::character varying
+ mgr      | integer               |           |          |
+ hiredate | date                  |           |          |
+ sal      | numeric(7,2)          |           |          | NULL::numeric
+ comm     | numeric(7,2)          |           |          | NULL::numeric
+ deptno   | integer               |           |          |
+
+
+employees=#
+
 
 
