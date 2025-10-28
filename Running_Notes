@@ -54,5 +54,21 @@ employees=# \c dvdrental
 You are now connected to database "dvdrental" as user "postgres".
 dvdrental=#
 
+E Execute .SQL script files using PSQL tool
+C:\Program Files\PostgreSQL\16\bin>psql -h localhost -U postgres -d employees  < c:\scripts\test.sql
+Password for user postgres:
+ empno | ename |  job  | mgr  |  hiredate  |  sal   | comm | deptno
+-------+-------+-------+------+------------+--------+------+--------
+  7369 | SMITH | CLERK | 7902 | 1980-12-17 | 800.00 |      |     20
+(1 row)
+
+ deptno |   dname    |   loc
+--------+------------+----------
+     10 | ACCOUNTING | NEW YORK
+(1 row)
+
+
+C:\Program Files\PostgreSQL\16\bin>
+
 
 
