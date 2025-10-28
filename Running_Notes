@@ -14,3 +14,45 @@ Day 2:
 # Change the postgres User password
 ALTER USER postgres WITH PASSWORD 'secret';
 
+# Connecting from Windows CMD
+C:\Users\test>cd C:\Program Files\PostgreSQL\16\bin
+
+C:\Program Files\PostgreSQL\16\bin>psql -h localhost -U postgres
+Password for user postgres:
+psql (16.10)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=#
+
+# display connection Indormation
+
+postgres=# \conninfo
+You are connected to database "postgres" as user "postgres" on host "localhost" (address "::1") at port "5432".
+
+# Connecting to Employees Database
+
+postgres=# exit
+
+C:\Program Files\PostgreSQL\16\bin>psql -h localhost -U postgres -d employees
+Password for user postgres:
+psql (16.10)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+employees=# \conninfo
+You are connected to database "employees" as user "postgres" on host "localhost" (address "::1") at port "5432".
+employees=#
+
+# Switching Database
+
+employees=# \c dvdrental
+You are now connected to database "dvdrental" as user "postgres".
+dvdrental=#
+
+
+
