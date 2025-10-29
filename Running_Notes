@@ -568,4 +568,59 @@ employees=# select * from emp where sal > 1400 order by job desc, ename asc limi
 
 
 employees=#
+employees=# select * from emp where job = 'MANAGER';
+ empno | ename |   job   | mgr  |  hiredate  |   sal   | comm | deptno
+-------+-------+---------+------+------------+---------+------+--------
+  7566 | JONES | MANAGER | 7839 | 1981-04-02 | 2975.00 |      |     20
+  7698 | BLAKE | MANAGER | 7839 | 1981-05-01 | 2850.00 |      |     30
+  7782 | CLARK | MANAGER | 7839 | 1981-06-09 | 2450.00 |      |     10
+(3 rows)
+
+
+employees=# select * from emp where job = $$MANAGER$$;
+ empno | ename |   job   | mgr  |  hiredate  |   sal   | comm | deptno
+-------+-------+---------+------+------------+---------+------+--------
+  7566 | JONES | MANAGER | 7839 | 1981-04-02 | 2975.00 |      |     20
+  7698 | BLAKE | MANAGER | 7839 | 1981-05-01 | 2850.00 |      |     30
+  7782 | CLARK | MANAGER | 7839 | 1981-06-09 | 2450.00 |      |     10
+(3 rows)
+
+
+employees=# create table select (custid int, cname varchar(20));
+ERROR:  syntax error at or near "select"
+LINE 1: create table select (custid int, cname varchar(20));
+                     ^
+employees=# create table "select" (custid int, cname varchar(20));
+CREATE TABLE
+employees=# \d
+          List of relations
+ Schema |   Name   | Type  |  Owner
+--------+----------+-------+----------
+ public | bonus    | table | postgres
+ public | dept     | table | postgres
+ public | emp      | table | postgres
+ public | salgrade | table | postgres
+ public | select   | table | postgres
+(5 rows)
+
+
+employees=# insert into select values (1, 'aaa'), (2, 'bbb');
+ERROR:  syntax error at or near "select"
+LINE 1: insert into select values (1, 'aaa'), (2, 'bbb');
+                    ^
+employees=# insert into "select" values (1, 'aaa'), (2, 'bbb');
+INSERT 0 2
+employees=# select * from select;
+ERROR:  syntax error at or near "select"
+LINE 1: select * from select;
+                      ^
+employees=# select * from "select";
+ custid | cname
+--------+-------
+      1 | aaa
+      2 | bbb
+(2 rows)
+
+
+employees=#
 
