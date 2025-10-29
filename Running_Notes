@@ -1410,3 +1410,452 @@ employees=# select deptno, job, sum(sal) from emp group by  cube(deptno, job) or
 
 
 employees=#
+
+
+employees=# select * from emp;
+ empno | ename  |    job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+-----------+------+------------+---------+---------+--------
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10
+(14 rows)
+
+
+employees=# select * from dept;
+ deptno |   dname    |   loc
+--------+------------+----------
+     10 | ACCOUNTING | NEW YORK
+     20 | RESEARCH   | DALLAS
+     30 | SALES      | CHICAGO
+     40 | OPERATIONS | BOSTON
+(4 rows)
+
+
+employees=# select * from salgrade;
+ grade |  losal  |  hisal
+-------+---------+---------
+     1 |  700.00 | 1200.00
+     2 | 1201.00 | 1400.00
+     3 | 1401.00 | 2000.00
+     4 | 2001.00 | 3000.00
+     5 | 3001.00 | 9999.00
+(5 rows)
+
+
+employees=# select * from emp cross join dept;
+ empno | ename  |    job    | mgr  |  hiredate  |   sal   |  comm   | deptno | deptno |   dna
+me    |   loc
+-------+--------+-----------+------+------------+---------+---------+--------+--------+------
+------+----------
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20 |     10 | ACCOU
+NTING | NEW YORK
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |     10 | ACCOU
+NTING | NEW YORK
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |     10 | ACCOU
+NTING | NEW YORK
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20 |     10 | ACCOU
+NTING | NEW YORK
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |     10 | ACCOU
+NTING | NEW YORK
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30 |     10 | ACCOU
+NTING | NEW YORK
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10 |     10 | ACCOU
+NTING | NEW YORK
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20 |     10 | ACCOU
+NTING | NEW YORK
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10 |     10 | ACCOU
+NTING | NEW YORK
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |     10 | ACCOU
+NTING | NEW YORK
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20 |     10 | ACCOU
+NTING | NEW YORK
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30 |     10 | ACCOU
+NTING | NEW YORK
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20 |     10 | ACCOU
+NTING | NEW YORK
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10 |     10 | ACCOU
+NTING | NEW YORK
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20 |     20 | RESEA
+RCH   | DALLAS
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |     20 | RESEA
+RCH   | DALLAS
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |     20 | RESEA
+RCH   | DALLAS
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20 |     20 | RESEA
+RCH   | DALLAS
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |     20 | RESEA
+RCH   | DALLAS
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30 |     20 | RESEA
+RCH   | DALLAS
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10 |     20 | RESEA
+RCH   | DALLAS
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20 |     20 | RESEA
+RCH   | DALLAS
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10 |     20 | RESEA
+RCH   | DALLAS
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |     20 | RESEA
+RCH   | DALLAS
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20 |     20 | RESEA
+RCH   | DALLAS
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30 |     20 | RESEA
+RCH   | DALLAS
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20 |     20 | RESEA
+RCH   | DALLAS
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10 |     20 | RESEA
+RCH   | DALLAS
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20 |     30 | SALES
+      | CHICAGO
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |     30 | SALES
+      | CHICAGO
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |     30 | SALES
+      | CHICAGO
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20 |     30 | SALES
+      | CHICAGO
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |     30 | SALES
+      | CHICAGO
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30 |     30 | SALES
+      | CHICAGO
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10 |     30 | SALES
+      | CHICAGO
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20 |     30 | SALES
+      | CHICAGO
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10 |     30 | SALES
+      | CHICAGO
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |     30 | SALES
+      | CHICAGO
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20 |     30 | SALES
+      | CHICAGO
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30 |     30 | SALES
+      | CHICAGO
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20 |     30 | SALES
+      | CHICAGO
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10 |     30 | SALES
+      | CHICAGO
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20 |     40 | OPERA
+TIONS | BOSTON
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |     40 | OPERA
+TIONS | BOSTON
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |     40 | OPERA
+TIONS | BOSTON
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20 |     40 | OPERA
+TIONS | BOSTON
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |     40 | OPERA
+TIONS | BOSTON
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30 |     40 | OPERA
+TIONS | BOSTON
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10 |     40 | OPERA
+TIONS | BOSTON
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20 |     40 | OPERA
+TIONS | BOSTON
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10 |     40 | OPERA
+TIONS | BOSTON
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |     40 | OPERA
+TIONS | BOSTON
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20 |     40 | OPERA
+TIONS | BOSTON
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30 |     40 | OPERA
+TIONS | BOSTON
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20 |     40 | OPERA
+TIONS | BOSTON
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10 |     40 | OPERA
+TIONS | BOSTON
+(56 rows)
+
+
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=#
+employees=# select e.ename, e.job, e.sal, d.dname, d.loc from emp e  inner join dept d on e.d
+eptno=d.deptno;
+ ename  |    job    |   sal   |   dname    |   loc
+--------+-----------+---------+------------+----------
+ MILLER | CLERK     | 1300.00 | ACCOUNTING | NEW YORK
+ KING   | PRESIDENT | 5000.00 | ACCOUNTING | NEW YORK
+ CLARK  | MANAGER   | 2450.00 | ACCOUNTING | NEW YORK
+ FORD   | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ ADAMS  | CLERK     | 1100.00 | RESEARCH   | DALLAS
+ SCOTT  | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ JONES  | MANAGER   | 2975.00 | RESEARCH   | DALLAS
+ SMITH  | CLERK     |  800.00 | RESEARCH   | DALLAS
+ JAMES  | CLERK     |  950.00 | SALES      | CHICAGO
+ TURNER | SALESMAN  | 1500.00 | SALES      | CHICAGO
+ BLAKE  | MANAGER   | 2850.00 | SALES      | CHICAGO
+ MARTIN | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ WARD   | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ ALLEN  | SALESMAN  | 1600.00 | SALES      | CHICAGO
+(14 rows)
+
+
+employees=# select e.ename, e.job, e.sal, d.dname, d.loc from emp e   join dept d on e.deptno
+=d.deptno;
+ ename  |    job    |   sal   |   dname    |   loc
+--------+-----------+---------+------------+----------
+ MILLER | CLERK     | 1300.00 | ACCOUNTING | NEW YORK
+ KING   | PRESIDENT | 5000.00 | ACCOUNTING | NEW YORK
+ CLARK  | MANAGER   | 2450.00 | ACCOUNTING | NEW YORK
+ FORD   | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ ADAMS  | CLERK     | 1100.00 | RESEARCH   | DALLAS
+ SCOTT  | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ JONES  | MANAGER   | 2975.00 | RESEARCH   | DALLAS
+ SMITH  | CLERK     |  800.00 | RESEARCH   | DALLAS
+ JAMES  | CLERK     |  950.00 | SALES      | CHICAGO
+ TURNER | SALESMAN  | 1500.00 | SALES      | CHICAGO
+ BLAKE  | MANAGER   | 2850.00 | SALES      | CHICAGO
+ MARTIN | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ WARD   | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ ALLEN  | SALESMAN  | 1600.00 | SALES      | CHICAGO
+(14 rows)
+
+
+employees=# select e.ename, e.job, e.sal, d.dname, d.loc from emp e   natural join dept d;
+ ename  |    job    |   sal   |   dname    |   loc
+--------+-----------+---------+------------+----------
+ MILLER | CLERK     | 1300.00 | ACCOUNTING | NEW YORK
+ KING   | PRESIDENT | 5000.00 | ACCOUNTING | NEW YORK
+ CLARK  | MANAGER   | 2450.00 | ACCOUNTING | NEW YORK
+ FORD   | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ ADAMS  | CLERK     | 1100.00 | RESEARCH   | DALLAS
+ SCOTT  | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ JONES  | MANAGER   | 2975.00 | RESEARCH   | DALLAS
+ SMITH  | CLERK     |  800.00 | RESEARCH   | DALLAS
+ JAMES  | CLERK     |  950.00 | SALES      | CHICAGO
+ TURNER | SALESMAN  | 1500.00 | SALES      | CHICAGO
+ BLAKE  | MANAGER   | 2850.00 | SALES      | CHICAGO
+ MARTIN | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ WARD   | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ ALLEN  | SALESMAN  | 1600.00 | SALES      | CHICAGO
+(14 rows)
+
+
+employees=# select * from emp;
+ empno | ename  |    job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+-----------+------+------------+---------+---------+--------
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10
+(14 rows)
+
+
+employees=# insert into emp values (8001, 'SAMI', 'TRAINER', 7839, '2025-10-27', 3000, NULL,
+50);
+INSERT 0 1
+employees=# select * from emp;
+ empno | ename  |    job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+-----------+------+------------+---------+---------+--------
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10
+  8001 | SAMI   | TRAINER   | 7839 | 2025-10-27 | 3000.00 |         |     50
+(15 rows)
+
+
+employees=# select * from dept;
+ deptno |   dname    |   loc
+--------+------------+----------
+     10 | ACCOUNTING | NEW YORK
+     20 | RESEARCH   | DALLAS
+     30 | SALES      | CHICAGO
+     40 | OPERATIONS | BOSTON
+(4 rows)
+
+
+employees=# select e.ename, e.job, e.sal, d.dname, d.loc from emp e  inner join dept d on e.d
+eptno=d.deptno;
+ ename  |    job    |   sal   |   dname    |   loc
+--------+-----------+---------+------------+----------
+ MILLER | CLERK     | 1300.00 | ACCOUNTING | NEW YORK
+ KING   | PRESIDENT | 5000.00 | ACCOUNTING | NEW YORK
+ CLARK  | MANAGER   | 2450.00 | ACCOUNTING | NEW YORK
+ FORD   | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ ADAMS  | CLERK     | 1100.00 | RESEARCH   | DALLAS
+ SCOTT  | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ JONES  | MANAGER   | 2975.00 | RESEARCH   | DALLAS
+ SMITH  | CLERK     |  800.00 | RESEARCH   | DALLAS
+ JAMES  | CLERK     |  950.00 | SALES      | CHICAGO
+ TURNER | SALESMAN  | 1500.00 | SALES      | CHICAGO
+ BLAKE  | MANAGER   | 2850.00 | SALES      | CHICAGO
+ MARTIN | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ WARD   | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ ALLEN  | SALESMAN  | 1600.00 | SALES      | CHICAGO
+(14 rows)
+
+
+employees=# select e.ename, e.job, e.sal, d.dname, d.loc from emp e  left outer  join dept d
+on e.deptno=d.deptno;
+ ename  |    job    |   sal   |   dname    |   loc
+--------+-----------+---------+------------+----------
+ MILLER | CLERK     | 1300.00 | ACCOUNTING | NEW YORK
+ KING   | PRESIDENT | 5000.00 | ACCOUNTING | NEW YORK
+ CLARK  | MANAGER   | 2450.00 | ACCOUNTING | NEW YORK
+ FORD   | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ ADAMS  | CLERK     | 1100.00 | RESEARCH   | DALLAS
+ SCOTT  | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ JONES  | MANAGER   | 2975.00 | RESEARCH   | DALLAS
+ SMITH  | CLERK     |  800.00 | RESEARCH   | DALLAS
+ JAMES  | CLERK     |  950.00 | SALES      | CHICAGO
+ TURNER | SALESMAN  | 1500.00 | SALES      | CHICAGO
+ BLAKE  | MANAGER   | 2850.00 | SALES      | CHICAGO
+ MARTIN | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ WARD   | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ ALLEN  | SALESMAN  | 1600.00 | SALES      | CHICAGO
+ SAMI   | TRAINER   | 3000.00 |            |
+(15 rows)
+
+
+employees=# select e.ename, e.job, e.sal, d.dname, d.loc from emp e  right outer  join dept d
+ on e.deptno=d.deptno;
+ ename  |    job    |   sal   |   dname    |   loc
+--------+-----------+---------+------------+----------
+ MILLER | CLERK     | 1300.00 | ACCOUNTING | NEW YORK
+ KING   | PRESIDENT | 5000.00 | ACCOUNTING | NEW YORK
+ CLARK  | MANAGER   | 2450.00 | ACCOUNTING | NEW YORK
+ FORD   | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ ADAMS  | CLERK     | 1100.00 | RESEARCH   | DALLAS
+ SCOTT  | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ JONES  | MANAGER   | 2975.00 | RESEARCH   | DALLAS
+ SMITH  | CLERK     |  800.00 | RESEARCH   | DALLAS
+ JAMES  | CLERK     |  950.00 | SALES      | CHICAGO
+ TURNER | SALESMAN  | 1500.00 | SALES      | CHICAGO
+ BLAKE  | MANAGER   | 2850.00 | SALES      | CHICAGO
+ MARTIN | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ WARD   | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ ALLEN  | SALESMAN  | 1600.00 | SALES      | CHICAGO
+        |           |         | OPERATIONS | BOSTON
+(15 rows)
+
+
+employees=# select e.ename, e.job, e.sal, d.dname, d.loc from emp e  full  outer  join dept d
+ on e.deptno=d.deptno;
+ ename  |    job    |   sal   |   dname    |   loc
+--------+-----------+---------+------------+----------
+ MILLER | CLERK     | 1300.00 | ACCOUNTING | NEW YORK
+ KING   | PRESIDENT | 5000.00 | ACCOUNTING | NEW YORK
+ CLARK  | MANAGER   | 2450.00 | ACCOUNTING | NEW YORK
+ FORD   | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ ADAMS  | CLERK     | 1100.00 | RESEARCH   | DALLAS
+ SCOTT  | ANALYST   | 3000.00 | RESEARCH   | DALLAS
+ JONES  | MANAGER   | 2975.00 | RESEARCH   | DALLAS
+ SMITH  | CLERK     |  800.00 | RESEARCH   | DALLAS
+ JAMES  | CLERK     |  950.00 | SALES      | CHICAGO
+ TURNER | SALESMAN  | 1500.00 | SALES      | CHICAGO
+ BLAKE  | MANAGER   | 2850.00 | SALES      | CHICAGO
+ MARTIN | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ WARD   | SALESMAN  | 1250.00 | SALES      | CHICAGO
+ ALLEN  | SALESMAN  | 1600.00 | SALES      | CHICAGO
+        |           |         | OPERATIONS | BOSTON
+ SAMI   | TRAINER   | 3000.00 |            |
+(16 rows)
+
+
+employees=# select * from emp;
+ empno | ename  |    job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+-----------+------+------------+---------+---------+--------
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10
+  8001 | SAMI   | TRAINER   | 7839 | 2025-10-27 | 3000.00 |         |     50
+(15 rows)
+
+
+employees=# select ename "Employee Name", ename "Manager Name" from emp;
+ Employee Name | Manager Name
+---------------+--------------
+ SMITH         | SMITH
+ ALLEN         | ALLEN
+ WARD          | WARD
+ JONES         | JONES
+ MARTIN        | MARTIN
+ BLAKE         | BLAKE
+ CLARK         | CLARK
+ SCOTT         | SCOTT
+ KING          | KING
+ TURNER        | TURNER
+ ADAMS         | ADAMS
+ JAMES         | JAMES
+ FORD          | FORD
+ MILLER        | MILLER
+ SAMI          | SAMI
+(15 rows)
+
+
+employees=# select e.ename "Employee Name", m.ename "Manager Name" from emp e join emp m on e
+.mgr = m.empno;
+ Employee Name | Manager Name
+---------------+--------------
+ SMITH         | FORD
+ ALLEN         | BLAKE
+ WARD          | BLAKE
+ JONES         | KING
+ MARTIN        | BLAKE
+ BLAKE         | KING
+ CLARK         | KING
+ SCOTT         | JONES
+ TURNER        | BLAKE
+ ADAMS         | SCOTT
+ JAMES         | BLAKE
+ FORD          | JONES
+ MILLER        | CLARK
+ SAMI          | KING
+(14 rows)
+
+
+employees=#
