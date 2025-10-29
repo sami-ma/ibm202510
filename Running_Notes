@@ -624,3 +624,516 @@ employees=# select * from "select";
 
 employees=#
 
+employees=# select abs(5-7);
+ abs
+-----
+   2
+(1 row)
+
+
+employees=# select ceil(7.92);
+ ceil
+------
+    8
+(1 row)
+
+
+employees=# select ceil(7.14);
+ ceil
+------
+    8
+(1 row)
+
+
+employees=# select floor(7.92);
+ floor
+-------
+     7
+(1 row)
+
+
+employees=# select floor(7.12);
+ floor
+-------
+     7
+(1 row)
+
+
+employees=# select round(7.92);
+ round
+-------
+     8
+(1 row)
+
+
+employees=# select round(7.12);
+ round
+-------
+     7
+(1 row)
+
+
+employees=# select trunc(5.6353);
+ trunc
+-------
+     5
+(1 row)
+
+
+employees=# select trunc(5.6353, 2);
+ trunc
+-------
+  5.63
+(1 row)
+
+
+employees=# select concat('Wel', 'Come');
+ concat
+---------
+ WelCome
+(1 row)
+
+
+employees=# 'Wel'||'Come';
+ERROR:  syntax error at or near "'Wel'"
+LINE 1: 'Wel'||'Come';
+        ^
+employees=# select 'Wel'||'Come';
+ ?column?
+----------
+ WelCome
+(1 row)
+
+
+employees=# select concat_ws('-', 'Wel', 'Come');
+ concat_ws
+-----------
+ Wel-Come
+(1 row)
+
+
+employees=# select left('welcome', 3);
+ left
+------
+ wel
+(1 row)
+
+
+employees=# select right('welcome', 4);
+ right
+-------
+ come
+(1 row)
+
+
+employees=# select substr('welcome', 3,2);
+ substr
+--------
+ lc
+(1 row)
+
+
+employees=# select upper('welcome');
+  upper
+---------
+ WELCOME
+(1 row)
+
+
+employees=# select lpad('Sami', 10, '-');
+    lpad
+------------
+ ------Sami
+(1 row)
+
+
+
+employees=# select rpad('Sami', 10, '-');
+    rpad
+------------
+ Sami------
+(1 row)
+
+
+employees=# select * from current_date;
+ current_date
+--------------
+ 2025-10-29
+(1 row)
+
+
+employees=# select * from current_time;
+     current_time
+-----------------------
+ 15:33:16.425486+05:30
+(1 row)
+
+
+employees=# select * from now();
+               now
+---------------------------------
+ 2025-10-29 15:33:33.21097+05:30
+(1 row)
+
+
+employees=# select extract(YEAR from '2024-05-13'::date);
+ extract
+---------
+    2024
+(1 row)
+
+
+employees=# select extract(YEAR from date '2024-05-13');
+ extract
+---------
+    2024
+(1 row)
+
+
+employees=# select age(date '2024-05-13', now());
+                    age
+--------------------------------------------
+ -1 years -5 mons -16 days -15:39:13.056912
+(1 row)
+
+
+employees=# select age(now(), date '2024-05-13');
+                  age
+---------------------------------------
+ 1 year 5 mons 16 days 15:40:03.874449
+(1 row)
+
+
+employees=# select pg_sleep(5);
+ pg_sleep
+----------
+
+(1 row)
+
+
+employees=# select pg_sleep_for('1 minutes');
+ pg_sleep_for
+--------------
+
+(1 row)
+
+
+employees=# select ename, hiredate from emp;
+ ename  |  hiredate
+--------+------------
+ SMITH  | 1980-12-17
+ ALLEN  | 1981-02-20
+ WARD   | 1981-02-22
+ JONES  | 1981-04-02
+ MARTIN | 1981-09-28
+ BLAKE  | 1981-05-01
+ CLARK  | 1981-06-09
+ SCOTT  | 1982-12-09
+ KING   | 1981-11-17
+ TURNER | 1981-09-08
+ ADAMS  | 1983-01-12
+ JAMES  | 1981-12-03
+ FORD   | 1981-12-03
+ MILLER | 1982-01-23
+(14 rows)
+
+
+employees=# select ename, hiredate, age(now(), hiredate)  from emp;
+ ename  |  hiredate  |                   age
+--------+------------+------------------------------------------
+ SMITH  | 1980-12-17 | 44 years 10 mons 12 days 15:45:17.204348
+ ALLEN  | 1981-02-20 | 44 years 8 mons 9 days 15:45:17.204348
+ WARD   | 1981-02-22 | 44 years 8 mons 7 days 15:45:17.204348
+ JONES  | 1981-04-02 | 44 years 6 mons 27 days 15:45:17.204348
+ MARTIN | 1981-09-28 | 44 years 1 mon 1 day 15:45:17.204348
+ BLAKE  | 1981-05-01 | 44 years 5 mons 28 days 15:45:17.204348
+ CLARK  | 1981-06-09 | 44 years 4 mons 20 days 15:45:17.204348
+ SCOTT  | 1982-12-09 | 42 years 10 mons 20 days 15:45:17.204348
+ KING   | 1981-11-17 | 43 years 11 mons 12 days 15:45:17.204348
+ TURNER | 1981-09-08 | 44 years 1 mon 21 days 15:45:17.204348
+ ADAMS  | 1983-01-12 | 42 years 9 mons 17 days 15:45:17.204348
+ JAMES  | 1981-12-03 | 43 years 10 mons 26 days 15:45:17.204348
+ FORD   | 1981-12-03 | 43 years 10 mons 26 days 15:45:17.204348
+ MILLER | 1982-01-23 | 43 years 9 mons 6 days 15:45:17.204348
+(14 rows)
+
+
+employees=# select date '2024-05-13' + interval '3 month';
+      ?column?
+---------------------
+ 2024-08-13 00:00:00
+(1 row)
+
+
+employees=# select date '2024-05-13' - interval '3 month';
+      ?column?
+---------------------
+ 2024-02-13 00:00:00
+(1 row)
+
+
+employees=# select date '2024-05-13' + interval '-3 month';
+      ?column?
+---------------------
+ 2024-02-13 00:00:00
+(1 row)
+
+
+employees=# select ename, to_char(hiredate, 'month') from emp;
+ ename  |  to_char
+--------+-----------
+ SMITH  | december
+ ALLEN  | february
+ WARD   | february
+ JONES  | april
+ MARTIN | september
+ BLAKE  | may
+ CLARK  | june
+ SCOTT  | december
+ KING   | november
+ TURNER | september
+ ADAMS  | january
+ JAMES  | december
+ FORD   | december
+ MILLER | january
+(14 rows)
+
+
+employees=# select ename, to_char(hiredate, 'mon') from emp;
+ ename  | to_char
+--------+---------
+ SMITH  | dec
+ ALLEN  | feb
+ WARD   | feb
+ JONES  | apr
+ MARTIN | sep
+ BLAKE  | may
+ CLARK  | jun
+ SCOTT  | dec
+ KING   | nov
+ TURNER | sep
+ ADAMS  | jan
+ JAMES  | dec
+ FORD   | dec
+ MILLER | jan
+(14 rows)
+
+
+employees=# select ename, to_char(hiredate, 'MON') from emp;
+ ename  | to_char
+--------+---------
+ SMITH  | DEC
+ ALLEN  | FEB
+ WARD   | FEB
+ JONES  | APR
+ MARTIN | SEP
+ BLAKE  | MAY
+ CLARK  | JUN
+ SCOTT  | DEC
+ KING   | NOV
+ TURNER | SEP
+ ADAMS  | JAN
+ JAMES  | DEC
+ FORD   | DEC
+ MILLER | JAN
+(14 rows)
+
+
+employees=# select ename, to_char(hiredate, 'MON'), to_char(hiredate, 'DAY') from emp;
+ ename  | to_char |  to_char
+--------+---------+-----------
+ SMITH  | DEC     | WEDNESDAY
+ ALLEN  | FEB     | FRIDAY
+ WARD   | FEB     | SUNDAY
+ JONES  | APR     | THURSDAY
+ MARTIN | SEP     | MONDAY
+ BLAKE  | MAY     | FRIDAY
+ CLARK  | JUN     | TUESDAY
+ SCOTT  | DEC     | THURSDAY
+ KING   | NOV     | TUESDAY
+ TURNER | SEP     | TUESDAY
+ ADAMS  | JAN     | WEDNESDAY
+ JAMES  | DEC     | THURSDAY
+ FORD   | DEC     | THURSDAY
+ MILLER | JAN     | SATURDAY
+(14 rows)
+
+
+employees=# select * from emp;
+ empno | ename  |    job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+-----------+------+------------+---------+---------+--------
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10
+(14 rows)
+
+
+employees=# select ename, to_char(hiredate, 'MON'), to_char(hiredate, 'DAY'), to_char(sal, '9
+,999D99') from emp;
+ ename  | to_char |  to_char  |  to_char
+--------+---------+-----------+-----------
+ SMITH  | DEC     | WEDNESDAY |    800.00
+ ALLEN  | FEB     | FRIDAY    |  1,600.00
+ WARD   | FEB     | SUNDAY    |  1,250.00
+ JONES  | APR     | THURSDAY  |  2,975.00
+ MARTIN | SEP     | MONDAY    |  1,250.00
+ BLAKE  | MAY     | FRIDAY    |  2,850.00
+ CLARK  | JUN     | TUESDAY   |  2,450.00
+ SCOTT  | DEC     | THURSDAY  |  3,000.00
+ KING   | NOV     | TUESDAY   |  5,000.00
+ TURNER | SEP     | TUESDAY   |  1,500.00
+ ADAMS  | JAN     | WEDNESDAY |  1,100.00
+ JAMES  | DEC     | THURSDAY  |    950.00
+ FORD   | DEC     | THURSDAY  |  3,000.00
+ MILLER | JAN     | SATURDAY  |  1,300.00
+(14 rows)
+
+
+employees=# select min(sal) from emp;
+  min
+--------
+ 800.00
+(1 row)
+
+
+employees=# select max(sal), min(sal), avg(sal), sum(sal) from emp;
+   max   |  min   |          avg          |   sum
+---------+--------+-----------------------+----------
+ 5000.00 | 800.00 | 2073.2142857142857143 | 29025.00
+(1 row)
+
+
+employees=# select max(sal), min(sal), avg(sal), sum(sal), count(*) from emp;
+   max   |  min   |          avg          |   sum    | count
+---------+--------+-----------------------+----------+-------
+ 5000.00 | 800.00 | 2073.2142857142857143 | 29025.00 |    14
+(1 row)
+
+
+employees=# select count(*) from emp;
+ count
+-------
+    14
+(1 row)
+
+
+employees=# select count(ename) from emp;
+ count
+-------
+    14
+(1 row)
+
+
+employees=# select count(mgr) from emp;
+ count
+-------
+    13
+(1 row)
+
+
+employees=# select count(comm) from emp;
+ count
+-------
+     4
+(1 row)
+
+
+employees=# select * from emp;
+ empno | ename  |    job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+-----------+------+------------+---------+---------+--------
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10
+(14 rows)
+
+
+employees=# select string_agg(',', ename) from emp;
+                                   string_agg
+---------------------------------------------------------------------------------
+ ,ALLEN,WARD,JONES,MARTIN,BLAKE,CLARK,SCOTT,KING,TURNER,ADAMS,JAMES,FORD,MILLER,
+(1 row)
+
+
+employees=# select string_agg( ename, ',') from emp;
+                                     string_agg
+-------------------------------------------------------------------------------------
+ SMITH,ALLEN,WARD,JONES,MARTIN,BLAKE,CLARK,SCOTT,KING,TURNER,ADAMS,JAMES,FORD,MILLER
+(1 row)
+
+
+employees=# select job, count(*) from emp group by job;
+    job    | count
+-----------+-------
+ CLERK     |     4
+ PRESIDENT |     1
+ MANAGER   |     3
+ SALESMAN  |     4
+ ANALYST   |     2
+(5 rows)
+
+
+employees=# select deptno, count(*) from emp group by deptno;
+ deptno | count
+--------+-------
+     30 |     6
+     10 |     3
+     20 |     5
+(3 rows)
+
+
+employees=# select string_agg(ename, ','), job, count(*) from emp group by job;
+        string_agg        |    job    | count
+--------------------------+-----------+-------
+ SMITH,ADAMS,JAMES,MILLER | CLERK     |     4
+ KING                     | PRESIDENT |     1
+ JONES,BLAKE,CLARK        | MANAGER   |     3
+ ALLEN,WARD,MARTIN,TURNER | SALESMAN  |     4
+ SCOTT,FORD               | ANALYST   |     2
+(5 rows)
+
+
+employees=# select string_agg(ename, ','), job, count(*) from emp group by job having count(*
+) >- 3;
+        string_agg        |    job    | count
+--------------------------+-----------+-------
+ SMITH,ADAMS,JAMES,MILLER | CLERK     |     4
+ KING                     | PRESIDENT |     1
+ JONES,BLAKE,CLARK        | MANAGER   |     3
+ ALLEN,WARD,MARTIN,TURNER | SALESMAN  |     4
+ SCOTT,FORD               | ANALYST   |     2
+(5 rows)
+
+
+employees=# select string_agg(ename, ','), job, count(*) from emp group by job having count(*
+) >= 3;
+        string_agg        |   job    | count
+--------------------------+----------+-------
+ SMITH,ADAMS,JAMES,MILLER | CLERK    |     4
+ JONES,BLAKE,CLARK        | MANAGER  |     3
+ ALLEN,WARD,MARTIN,TURNER | SALESMAN |     4
+(3 rows)
+
+
+employees=#
