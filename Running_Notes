@@ -1968,3 +1968,224 @@ employees-# (select max(ei.sal) from emp ei where ei.deptno=eo.deptno) ;
 
 
 employees=
+
+employees=# select * From dept;
+ deptno |   dname    |   loc
+--------+------------+----------
+     10 | ACCOUNTING | NEW YORK
+     20 | RESEARCH   | DALLAS
+     30 | SALES      | CHICAGO
+     40 | OPERATIONS | BOSTON
+(4 rows)
+
+
+employees=# select * from emp where deptno =
+employees-# (select deptno from dept where loc = 'CHICAGO');
+ empno | ename  |   job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+----------+------+------------+---------+---------+--------
+  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30
+  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30
+  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30
+  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850.00 |         |     30
+  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30
+  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950.00 |         |     30
+(6 rows)
+
+
+employees=# select * from emp where deptno = (select deptno from dept
+employees(# where loc in ('CHICAGO', 'DALLAS');
+employees(# );
+ERROR:  syntax error at or near ";"
+LINE 2: where loc in ('CHICAGO', 'DALLAS');
+                                          ^
+employees=# select * from emp where deptno = (select deptno from dept
+employees(# where loc in ('CHICAGO', 'DALLAS') );
+ERROR:  more than one row returned by a subquery used as an expression
+employees=# select deptno from deptemployees(# where loc in ('CHICAGO', 'DALLAS');
+employees(# );
+ERROR:  syntax error at or near "where"
+LINE 1: select deptno from deptemployees(# where loc in ('CHICAGO', ...
+                                           ^
+employees=# select deptno from dept where deptno in ('CHICAGO', 'DALLAS');
+ERROR:  invalid input syntax for type integer: "CHICAGO"
+LINE 1: select deptno from dept where deptno in ('CHICAGO', 'DALLAS'...
+                                                 ^
+employees=# select deptno from dept where loc in ('CHICAGO', 'DALLAS');
+ deptno
+--------
+     20
+     30
+(2 rows)
+
+
+employees=# select * from emp where deptno =
+employees-# (select deptno from dept where loc in ('CHICAGO', 'DALLAS');
+employees(# );
+ERROR:  syntax error at or near ";"
+LINE 2: (select deptno from dept where loc in ('CHICAGO', 'DALLAS');
+                                                                   ^
+employees=# select * from emp where deptno =
+employees-# (select deptno from dept where loc in ('CHICAGO', 'DALLAS') );
+ERROR:  more than one row returned by a subquery used as an expression
+employees=# select * from emp where deptno in
+employees-# (select deptno from dept where loc in ('CHICAGO', 'DALLAS') );
+ empno | ename  |   job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+----------+------+------------+---------+---------+--------
+  7369 | SMITH  | CLERK    | 7902 | 1980-12-17 |  800.00 |         |     20
+  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30
+  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30
+  7566 | JONES  | MANAGER  | 7839 | 1981-04-02 | 2975.00 |         |     20
+  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30
+  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850.00 |         |     30
+  7788 | SCOTT  | ANALYST  | 7566 | 1982-12-09 | 3000.00 |         |     20
+  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30
+  7876 | ADAMS  | CLERK    | 7788 | 1983-01-12 | 1100.00 |         |     20
+  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950.00 |         |     30
+  7902 | FORD   | ANALYST  | 7566 | 1981-12-03 | 3000.00 |         |     20
+(11 rows)
+
+
+employees=# select * from emp;
+ empno | ename  |    job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+-----------+------+------------+---------+---------+--------
+employees=#
+employees=#
+employees=#
+employees=#
+employees=# create table customers (cid int, cname varchar(20), phoneno int[]);
+CREATE TABLE
+employees=# insert into customers values (100, 'aaa', '{677876323, 867367373}' );
+INSERT 0 1
+employees=# insert into customers values (101, 'bbb', '{736373633, 867367373}' );
+INSERT 0 1
+employees=# select * from emp;
+ empno | ename  |    job    | mgr  |  hiredate  |   sal   |  comm   | deptno
+-------+--------+-----------+------+------------+---------+---------+--------
+  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |         |     20
+  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30
+  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30
+  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |         |     20
+  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30
+  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |         |     30
+  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |         |     10
+  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |         |     20
+  7839 | KING   | PRESIDENT |      | 1981-11-17 | 5000.00 |         |     10
+  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30
+  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |         |     20
+  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |         |     30
+  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |         |     20
+  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |         |     10
+  8001 | SAMI   | TRAINER   | 7839 | 2025-10-27 | 3000.00 |         |     50
+(15 rows)
+
+
+
+employees=# select * from customers;
+ cid | cname |        phoneno
+-----+-------+-----------------------
+ 100 | aaa   | {677876323,867367373}
+ 101 | bbb   | {736373633,867367373}
+(2 rows)
+
+
+employees=# select cname, phoneno[1] from customers;
+ cname |  phoneno
+-------+-----------
+ aaa   | 677876323
+ bbb   | 736373633
+(2 rows)
+
+
+employees=# select cname, phoneno[1], phoneno[2]  from customers;
+ cname |  phoneno  |  phoneno
+-------+-----------+-----------
+ aaa   | 677876323 | 867367373
+ bbb   | 736373633 | 867367373
+(2 rows)
+
+
+employees=# select cname, phoneno[1], phoneno[2]  from customers phoneno[1] = 677876323;
+ERROR:  syntax error at or near "["
+LINE 1: ...me, phoneno[1], phoneno[2]  from customers phoneno[1] = 6778...
+                                                             ^
+employees=# select cname, phoneno[1], phoneno[2]  from customers where phoneno[1] = 677876323
+;
+ cname |  phoneno  |  phoneno
+-------+-----------+-----------
+ aaa   | 677876323 | 867367373
+(1 row)
+
+
+employees=# CREATE TYPE inventory_item AS (name text, supplier_id integer, price numeric );
+CREATE TYPE
+employees=# create table weekly_stock (Weekofyear int, item inventory_item, year decimal(4) )
+;
+CREATE TABLE
+employees=# Insert into weekly_stock values (12, '("Coke", 1001, 134.00)', 2020);
+INSERT 0 1
+employees=# select * from weekly_stock;
+ weekofyear |        item        | year
+------------+--------------------+------
+         12 | (Coke,1001,134.00) | 2020
+(1 row)
+
+
+employees=# select weekofyear, (item).name, from weekly_stock;
+ERROR:  syntax error at or near "from"
+LINE 1: select weekofyear, (item).name, from weekly_stock;
+                                        ^
+employees=# select weekofyear, (item).name from weekly_stock;
+ weekofyear | name
+------------+------
+         12 | Coke
+(1 row)
+
+
+employees=# select weekofyear, (item).name from weekly_stock;
+ weekofyear | name
+------------+------
+         12 | Coke
+(1 row)
+
+
+
+                           ^
+employees=# create extension hstore;
+CREATE EXTENSION
+
+employees=# create table cust ( cust_id int, cname varchar(30), address hstore);
+CREATE TABLE
+
+employees=# insert into cust values (10, 'Scott', ' "Hno" => "134", "screet" => "JamesStreet"
+, "locality" => "Jubileehills", "city" => "Hyderabad" ');
+INSERT 0 1
+employees=# select * from cust;
+ cust_id | cname |                                        address
+
+---------+-------+---------------------------------------------------------------------------
+-------------
+      10 | Scott | "Hno"=>"134", "city"=>"Hyderabad", "screet"=>"JamesStreet", "locality"=>"J
+ubileehills"
+(1 row)
+
+
+employees=# select * from cust where address -> city = "Hyderabad";
+ERROR:  column "city" does not exist
+LINE 1: select * from cust where address -> city = "Hyderabad";
+                                            ^
+employees=# select * from cust where address -> "city" = "Hyderabad";
+ERROR:  column "city" does not exist
+LINE 1: select * from cust where address -> "city" = "Hyderabad";
+                                            ^
+employees=# select * from cust where address -> 'city' = 'Hyderabad';
+ cust_id | cname |                                        address
+
+---------+-------+---------------------------------------------------------------------------
+-------------
+      10 | Scott | "Hno"=>"134", "city"=>"Hyderabad", "screet"=>"JamesStreet", "locality"=>"J
+ubileehills"
+(1 row)
+
+
+employees=
+
