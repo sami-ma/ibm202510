@@ -2115,7 +2115,7 @@ employees=# select cname, phoneno[1], phoneno[2]  from customers where phoneno[1
  aaa   | 677876323 | 867367373
 (1 row)
 
-
+-- composites
 employees=# CREATE TYPE inventory_item AS (name text, supplier_id integer, price numeric );
 CREATE TYPE
 employees=# create table weekly_stock (Weekofyear int, item inventory_item, year decimal(4) )
@@ -2148,7 +2148,7 @@ employees=# select weekofyear, (item).name from weekly_stock;
 (1 row)
 
 
-
+-- htore data type
                            ^
 employees=# create extension hstore;
 CREATE EXTENSION
@@ -2180,7 +2180,7 @@ employees=# select * from cust where address -> 'city' = 'Hyderabad';
 ubileehills"
 (1 row)
 
-
+-- json data type
 employees=
 
 employees=# create table emp_json (empid serial, empdetails JSONB);
@@ -2221,6 +2221,68 @@ employees=# select empid, empdetails ->> 'name'from emp_json;
      2 | Scott
 (2 rows)
 
+-- CTE 
 
 employees=#
 
+ WITH  empdept AS  (select e.ename, e.job, e.sal, d.dname, d.loc from emp e join dept
+ d on e.deptno = d.deptno) select ed.*, s.grade from salgrade s join empdept ed on ed.sal betwee
+n s.losal and s.hisal;
+ ename  |    job    |   sal   |   dname    |   loc    | grade
+--------+-----------+---------+------------+----------+-------
+ SMITH  | CLERK     |  800.00 | RESEARCH   | DALLAS   |     1
+ ADAMS  | CLERK     | 1100.00 | RESEARCH   | DALLAS   |     1
+ JAMES  | CLERK     |  950.00 | SALES      | CHICAGO  |     1
+ WARD   | SALESMAN  | 1250.00 | SALES      | CHICAGO  |     2
+ MARTIN | SALESMAN  | 1250.00 | SALES      | CHICAGO  |     2
+ MILLER | CLERK     | 1300.00 | ACCOUNTING | NEW YORK |     2
+ ALLEN  | SALESMAN  | 1600.00 | SALES      | CHICAGO  |     3
+ TURNER | SALESMAN  | 1500.00 | SALES      | CHICAGO  |     3
+ JONES  | MANAGER   | 2975.00 | RESEARCH   | DALLAS   |     4
+ BLAKE  | MANAGER   | 2850.00 | SALES      | CHICAGO  |     4
+ CLARK  | MANAGER   | 2450.00 | ACCOUNTING | NEW YORK |     4
+ SCOTT  | ANALYST   | 3000.00 | RESEARCH   | DALLAS   |     4
+ FORD   | ANALYST   | 3000.00 | RESEARCH   | DALLAS   |     4
+ KING   | PRESIDENT | 5000.00 | ACCOUNTING | NEW YORK |     5
+(14 rows)
+
+-- Window funtions
+employees=# select job, max(sal) from emp group by job;
+    job    |   max
+-----------+---------
+ CLERK     | 1300.00
+ PRESIDENT | 5000.00
+ MANAGER   | 2975.00
+ SALESMAN  | 1600.00
+ ANALYST   | 3000.00
+ TRAINER   | 3000.00
+(6 rows)
+
+
+employees=# select ename, job, sal, max(sal) from emp group by job;
+ERROR:  column "emp.ename" must appear in the GROUP BY clause or be used in an aggregate functio
+n
+LINE 1: select ename, job, sal, max(sal) from emp group by job;
+               ^
+employees=# select ename, job, sal, max(sal) over (partition by job) from emp ;
+ ename  |    job    |   sal   |   max
+--------+-----------+---------+---------
+ SCOTT  | ANALYST   | 3000.00 | 3000.00
+ FORD   | ANALYST   | 3000.00 | 3000.00
+ SMITH  | CLERK     |  800.00 | 1300.00
+ ADAMS  | CLERK     | 1100.00 | 1300.00
+ JAMES  | CLERK     |  950.00 | 1300.00
+ MILLER | CLERK     | 1300.00 | 1300.00
+ CLARK  | MANAGER   | 2450.00 | 2975.00
+ JONES  | MANAGER   | 2975.00 | 2975.00
+ BLAKE  | MANAGER   | 2850.00 | 2975.00
+ KING   | PRESIDENT | 5000.00 | 5000.00
+ TURNER | SALESMAN  | 1500.00 | 1600.00
+ ALLEN  | SALESMAN  | 1600.00 | 1600.00
+ MARTIN | SALESMAN  | 1250.00 | 1600.00
+ WARD   | SALESMAN  | 1250.00 | 1600.00
+ SAMI   | TRAINER   | 3000.00 | 3000.00
+(15 rows)
+
+
+employees=#
