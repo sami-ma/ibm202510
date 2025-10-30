@@ -2169,13 +2169,7 @@ ubileehills"
 (1 row)
 
 
-employees=# select * from cust where address -> city = "Hyderabad";
-ERROR:  column "city" does not exist
-LINE 1: select * from cust where address -> city = "Hyderabad";
-                                            ^
-employees=# select * from cust where address -> "city" = "Hyderabad";
-ERROR:  column "city" does not exist
-LINE 1: select * from cust where address -> "city" = "Hyderabad";
+
                                             ^
 employees=# select * from cust where address -> 'city' = 'Hyderabad';
  cust_id | cname |                                        address
@@ -2188,4 +2182,45 @@ ubileehills"
 
 
 employees=
+
+employees=# create table emp_json (empid serial, empdetails JSONB);
+CREATE TABLE
+employees=# insert into emp_json (empdetails) values ('{ "name" : "sami", "job" : "trainer" }
+');
+INSERT 0 1
+employees=# select * from emp_json;
+ empid |             empdetails
+-------+------------------------------------
+     1 | {"job": "trainer", "name": "sami"}
+(1 row)
+
+
+employees=# insert into emp_json (empdetails) values ('{ "name" : "Scott", "job" : "Manager"
+, "salary" : 55000}');
+INSERT 0 1
+employees=# select * from emp_json;
+ empid |                      empdetails
+-------+------------------------------------------------------
+     1 | {"job": "trainer", "name": "sami"}
+     2 | {"job": "Manager", "name": "Scott", "salary": 55000}
+(2 rows)
+
+
+employees=# select empid, empdetails -> 'name'from emp_json;
+ empid | ?column?
+-------+----------
+     1 | "sami"
+     2 | "Scott"
+(2 rows)
+
+
+employees=# select empid, empdetails ->> 'name'from emp_json;
+ empid | ?column?
+-------+----------
+     1 | sami
+     2 | Scott
+(2 rows)
+
+
+employees=#
 
