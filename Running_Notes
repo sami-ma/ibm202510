@@ -2286,3 +2286,6 @@ employees=# select ename, job, sal, max(sal) over (partition by job) from emp ;
 
 
 employees=#
+
+
+-- CTE with multiple auxillary quries
