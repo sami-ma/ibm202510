@@ -2286,7 +2286,8 @@ employees=# select ename, job, sal, max(sal) over (partition by job) from emp ;
 
 
 employees=#
-
+Day 5
+=====
 
 -- CTE with multiple auxillary quries
 WITH empdept AS (
